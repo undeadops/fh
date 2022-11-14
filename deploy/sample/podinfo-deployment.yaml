@@ -1,0 +1,45 @@
+version: 1
+
+name: pod info
+slug: podinfo
+org: undeadops
+owner: platform@undeadops.xyz
+slack: "#undead-Platform"
+namespace: platform
+deploy:
+  prod:
+    env:
+    - name: MY_ENV_VAR
+      value: "my value"
+    ports:
+    - name: http
+      number: 5000
+    service:
+    - name: podinfo
+      ports:
+      - name: http
+        number: 5000
+    ingress:
+    - host: podinfo.undeadops.xyz
+      public: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 50M
+      limits:
+        cpu: 1000m
+        memory: 256M
+aws:
+  iamRole: true
+  region: us-east-2
+  s3Bucket:
+    create: true
+    name: podinfo-foobar
+    encrypt: true
+  sqs:
+    - name: podinfo-foobar-inbox
+    - name: podinfo-foobar-outbox
+
+
+
+
